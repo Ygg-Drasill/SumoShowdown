@@ -19,5 +19,6 @@ func main() {
 	}
 	server := http.NewServeMux()
 	server.Handle("PUT /sessions/new", dbContext.NewSessionHandler())
+	server.Handle("POST /sessions/join", dbContext.JoinSessionHandler())
 	http.ListenAndServe("localhost:8080", server)
 }
