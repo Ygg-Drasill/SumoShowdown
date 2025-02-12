@@ -1,6 +1,16 @@
-import { Platform, Text, View } from "react-native";
+import { Href, Link, Redirect, useRouter } from "expo-router";
+import { Button, Platform, Text, View } from "react-native";
+import * as haptics from "expo-haptics"
+import useColorTheme from "@/hooks/useColors";
 
 export default function Index() {
+	const col = useColorTheme()
+	const router = useRouter()
+	const onJoinPress = () => {
+		haptics.notificationAsync(haptics.NotificationFeedbackType.Success)
+		router.replace("/vote" as Href)
+	}
+
 	return (
 		<View
 			style={{
@@ -9,10 +19,7 @@ export default function Index() {
 				alignItems: "center",
 			}}
 		>
-			<Text style={{fontFamily: Platform.select({
-				android: 'Bungee_400Regular',
-				ios: 'Bungee-Regular',
-			})}}>Edit app/index.tsx to edit this screen.</Text>
+			<Button color={col.primary} title="Join" onPress={onJoinPress}/>
 		</View>
 	);
 }

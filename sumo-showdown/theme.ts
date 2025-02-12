@@ -1,4 +1,18 @@
-export const c = {
+import { Theme } from "@react-navigation/native";
+
+export type SumoPalette = {
+	primary: string
+	background: string
+	text: string
+}
+
+export type SumoColorTheme = {
+	shadow: string,
+	light: SumoPalette
+	dark: SumoPalette
+} 
+
+export const c: SumoColorTheme = {
 	shadow: "#09090C",
 	light: {
 		primary: "#F3384B",
