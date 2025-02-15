@@ -1,16 +1,20 @@
 meta {
   name: Join
   type: http
-  seq: 3
+  seq: 1
 }
 
 post {
-  url: {{endpoint}}/sessions/join?code=9746&name=alex
+  url: {{endpoint}}/sessions/join?code=5157&name=alexan
   body: none
   auth: none
 }
 
 params:query {
-  code: 9746
-  name: alex
+  code: 5157
+  name: alexan
+}
+
+script:post-response {
+  bru.setEnvVar("playerToken",res.body)
 }
