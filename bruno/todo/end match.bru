@@ -5,9 +5,13 @@ meta {
 }
 
 post {
-  url: /sessions/:id/match/end
+  url: /sessions/:id/match/end?winner
   body: none
   auth: none
+}
+
+params:query {
+  winner: 
 }
 
 params:path {

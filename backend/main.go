@@ -16,10 +16,14 @@ func main() {
 	}
 	dbContext := &handlers.DbContext{Db: db}
 
-	sessionsRouter := dbContext.SessionsRouter()
-
 	server := http.NewServeMux()
-	server.Handle("/sessions", sessionsRouter)
+	server.Handle("PUT /sessions/new", dbContext.NewSessionHandler())
+	server.Handle("POST /sessions/join", dbContext.JoinSessionHandler())
+
+	server.Handle("PUT 	/sessions/{id}/next", dbContext.NextMatchHandler())
+	server.Handle("PUT 	/sessions/{id}/vote", dbContext.TokenMiddleware(dbContext.VoteHandler()))
+	server.Handle("PATCH /sessions/{id}/votes/close", dbContext.CloseVotingHandler())
+	server.Handle("GET /sessions/:id/match/results", dbContext.MatchResultHandler())
 
 	err = http.ListenAndServe("localhost:8080", server)
 	if err != nil {

@@ -1,9 +1,5 @@
-headers {
-  : 
-}
-
 auth {
-  mode: bearer
+  mode: none
 }
 
 vars:pre-request {
@@ -12,6 +8,7 @@ vars:pre-request {
 
 script:pre-request {
   const token = bru.getEnvVar("playerToken")
+  console.log(token)
   if (token.length === 0) return
   req.setHeader("Authorization", "Bearer " + token)
 }
