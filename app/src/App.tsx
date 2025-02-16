@@ -3,8 +3,8 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { ChakraProvider } from '@chakra-ui/react'
 import system from './theme'
-import HomePage from './pages/home'
 import JoinPage from './pages/Join'
+import HomePage from './pages/Home'
 
 const queryClient = new QueryClient()
 
