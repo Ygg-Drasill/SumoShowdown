@@ -34,7 +34,7 @@ func main() {
 	server.Handle("GET /sessions/:id/match/results", dbContext.MatchResultHandler())
 
 	addr := fmt.Sprintf("%s:%s", os.Getenv("API_ADDRESS"), os.Getenv("API_PORT"))
-	log.Println(addr)
+	log.Println("starting server on", addr)
 	err = http.ListenAndServe(addr, handlers.NewCorsHandler(server))
 	if err != nil {
 		panic(err)
