@@ -11,13 +11,11 @@ func (ctx *DbContext) TokenMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		auth := r.Header.Get("Authorization")
 		if len(auth) == 0 {
-			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte("No token provided"))
+			writeError(w, http.StatusUnauthorized, "No token provided")
 			return
 		}
 		if !strings.HasPrefix(auth, "Bearer ") {
-			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte("Token must be a bearer token"))
+			writeError(w, http.StatusUnauthorized, "Token must be a bearer token")
 			return
 		}
 
@@ -25,8 +23,7 @@ func (ctx *DbContext) TokenMiddleware(next http.Handler) http.Handler {
 		token := parts[1]
 		sessionId, err := strconv.Atoi(parts[0])
 		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte("Invalid token"))
+			writeError(w, http.StatusUnauthorized, "Invalid token")
 			return
 		}
 
@@ -40,8 +37,7 @@ func (ctx *DbContext) TokenMiddleware(next http.Handler) http.Handler {
 		}
 
 		if validPlayerRows == 0 {
-			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte("Invalid token"))
+			writeError(w, http.StatusUnauthorized, "Invalid token")
 			return
 		}
 
