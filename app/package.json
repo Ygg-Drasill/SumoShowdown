@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typegen": "npx @chakra-ui/cli typegen ./src/theme.ts"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.8.0",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
+    "@types/node": "^22.13.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
