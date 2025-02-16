@@ -2,7 +2,11 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
+	"github.com/joho/godotenv"
+	"log"
 	"net/http"
+	"os"
 	"sumoshowdownapi/handlers"
 
 	_ "modernc.org/sqlite"
@@ -10,6 +14,10 @@ import (
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	db, err := sql.Open("sqlite", "./data.db")
 	if err != nil {
 		panic("no db found")
@@ -25,7 +33,9 @@ func main() {
 	server.Handle("PATCH /sessions/{id}/votes/close", dbContext.CloseVotingHandler())
 	server.Handle("GET /sessions/:id/match/results", dbContext.MatchResultHandler())
 
-	err = http.ListenAndServe("192.168.0.134:3000", handlers.NewCorsHandler(server))
+	addr := fmt.Sprintf("%s:%s", os.Getenv("API_ADDRESS"), os.Getenv("API_PORT"))
+	log.Println(addr)
+	err = http.ListenAndServe(addr, handlers.NewCorsHandler(server))
 	if err != nil {
 		panic(err)
 	}
