@@ -25,7 +25,7 @@ func main() {
 	server.Handle("PATCH /sessions/{id}/votes/close", dbContext.CloseVotingHandler())
 	server.Handle("GET /sessions/:id/match/results", dbContext.MatchResultHandler())
 
-	err = http.ListenAndServe("localhost:8080", server)
+	err = http.ListenAndServe("192.168.0.134:8080", server)
 	if err != nil {
 		panic(err)
 	}
