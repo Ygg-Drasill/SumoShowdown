@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import system from './theme'
 import JoinPage from './pages/Join'
 import HomePage from './pages/Home'
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
 const queryClient = new QueryClient()
 
@@ -20,6 +21,7 @@ function App() {
             <Route path='/vote' />
           </Routes>
         </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} position="right" />
       </QueryClientProvider>
     </ChakraProvider>
   )

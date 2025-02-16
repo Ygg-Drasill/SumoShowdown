@@ -10,8 +10,8 @@ func NewCorsHandler(h http.Handler) *CorsHandler {
 	return &CorsHandler{h}
 }
 
-func (h *CorsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-	h.handler.ServeHTTP(w, r)
+func (h *CorsHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
+	writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	h.handler.ServeHTTP(writer, request)
 }
