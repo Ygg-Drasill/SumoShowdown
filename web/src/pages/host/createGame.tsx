@@ -1,12 +1,26 @@
 import { Box, Container, Typography } from "@mui/material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createSession } from "../../../api/sessionAPI";
 import GameButton from "../../components/gameButton";
 
 const CreateGame: React.FC = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const handleStartGame = () => {
-        navigate("/game");
+    const startGame = async () => {
+        if (loading) return;
+        setLoading(true);
+    
+        try {
+            const code = await createSession();
+            console.log("Session Code:", code);
+            navigate("/game"); 
+        } catch (error) {
+            console.error("Failed to fetch session code:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -50,7 +64,7 @@ const CreateGame: React.FC = () => {
                     SHOWDOWN!
                 </Typography>
             </Box>
-            <GameButton text="Create Game!" onClick={handleStartGame} />
+            <GameButton text="Create Game!" onClick={startGame} />
         </Container>
     );
 };
