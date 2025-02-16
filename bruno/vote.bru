@@ -1,0 +1,19 @@
+meta {
+  name: vote
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{endpoint}}/sessions/:id/vote?prediction=left
+  body: none
+  auth: none
+}
+
+params:query {
+  prediction: left
+}
+
+params:path {
+  id: 1
+}

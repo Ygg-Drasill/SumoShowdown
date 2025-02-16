@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"math"
 	"math/rand"
 	"net/http"
@@ -20,7 +21,11 @@ func (ctx *DbContext) NewSessionHandler() http.HandlerFunc {
 
 		code := int(math.Ceil(rand.Float64() * 9999))
 		var sessionId int
-		ctx.Db.QueryRow("INSERT INTO session(code) VALUES (?)", code).Scan(&sessionId)
+		err := ctx.Db.QueryRow("INSERT INTO session(code) VALUES (?) RETURNING id", code).Scan(&sessionId)
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
 		res, err := json.Marshal(newSessionResponse{
 			Id:   sessionId,
 			Code: code,
@@ -28,31 +33,36 @@ func (ctx *DbContext) NewSessionHandler() http.HandlerFunc {
 		if err != nil {
 			panic(err)
 		}
-		w.WriteHeader(300)
 		w.Header().Add("content-type", "application/json")
+		w.WriteHeader(http.StatusOK)
 		w.Write(res)
 	}
 }
 
 func (ctx *DbContext) JoinSessionHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
 		token := uuid.New()
 		code, err := strconv.Atoi(r.URL.Query().Get("code"))
 		name := r.URL.Query().Get("name")
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte("parameter missing"))
+			writeError(w, http.StatusBadRequest, "Parameter missing")
 			return
 		}
 		var sessionId int
 		err = ctx.Db.QueryRow("SELECT id FROM session WHERE code = ?", code).Scan(&sessionId)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte("session not found"))
+			writeError(w, http.StatusBadRequest, "Session not found")
 			return
 		}
-		ctx.Db.Exec("INSERT INTO player(session_id, token, name) VALUES (?, ?, ?)", sessionId, token, name)
-		w.Write([]byte(token.String()))
+		result, err := ctx.Db.Exec("INSERT INTO player(session_id, token, name) VALUES (?, ?, ?) RETURNING id",
+			sessionId, token, name)
+		rowsAffected, err := result.RowsAffected()
+		if err != nil || rowsAffected == 0 {
+			writeError(w, http.StatusInternalServerError,
+				"Unable to join session, player name may already have been taken")
+			return
+		}
+		playerToken := fmt.Sprintf("%d.%s", sessionId, token)
+		w.Write([]byte(playerToken))
 	}
 }

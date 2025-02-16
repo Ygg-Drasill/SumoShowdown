@@ -1,0 +1,19 @@
+meta {
+  name: end match
+  type: http
+  seq: 1
+}
+
+post {
+  url: /sessions/:id/match/end?winner
+  body: none
+  auth: none
+}
+
+params:query {
+  winner: 
+}
+
+params:path {
+  id: 
+}

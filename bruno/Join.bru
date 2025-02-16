@@ -1,11 +1,21 @@
 meta {
   name: Join
   type: http
-  seq: 3
+  seq: 1
 }
 
 post {
-  url: 
+  url: {{endpoint}}/sessions/join?code=2479&name=alex
   body: none
   auth: none
+}
+
+params:query {
+  code: 2479
+  name: alex
+}
+
+script:post-response {
+  if (res.status >= 200 && res.status <= 300)
+  bru.setEnvVar("playerToken",res.body)
 }

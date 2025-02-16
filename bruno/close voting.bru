@@ -1,0 +1,15 @@
+meta {
+  name: close voting
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{endpoint}}/sessions/:id/votes/close
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 1
+}

@@ -1,0 +1,15 @@
+meta {
+  name: next match
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{endpoint}}/sessions/:id/next
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 1
+}
