@@ -63,6 +63,12 @@ func (ctx *DbContext) JoinSessionHandler() http.HandlerFunc {
 			return
 		}
 		playerToken := fmt.Sprintf("%d.%s", sessionId, token)
-		w.Write([]byte(playerToken))
+		response, err := json.Marshal(struct {
+			Token string `json:"token"`
+		}{
+			Token: playerToken,
+		})
+		w.Header().Add("content-type", "application/json")
+		w.Write(response)
 	}
 }

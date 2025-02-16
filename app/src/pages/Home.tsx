@@ -1,13 +1,22 @@
-import { VStack } from "@chakra-ui/react"
+import { Center, IconButton } from "@chakra-ui/react"
 import { Button } from "@chakra-ui/react"
-import { Navigate, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
+import BasePage from "./BasePage"
+import { LuPlay } from "react-icons/lu"
 
 function HomePage() {
     const nav = useNavigate()
     return (
-        <VStack>
-            <Button backgroundColor={"primary"} shadow={"default"} onClick={() => nav("/join")}>Play</Button>
-        </VStack>
+        <BasePage>
+            <Center h={"100%"}>
+                <IconButton
+                    aria-label="Play"
+                >
+                    <LuPlay />
+                </IconButton>
+                <Button backgroundColor={"primary"} shadow={"default"} onClick={() => nav("/join")}>Play</Button>
+            </Center>
+        </BasePage>
     )
 }
 
