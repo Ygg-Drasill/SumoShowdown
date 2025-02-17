@@ -9,6 +9,9 @@ function VotePage() {
     const { mutate: vote } = useMutation({
         mutationKey: ["vote"],
         mutationFn: async () => await client.put(`/sessions/${sessionId}/vote`, null, {
+            params: {
+                prediction: "left"
+            },
             withCredentials: true
         })
     })
