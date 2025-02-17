@@ -11,7 +11,9 @@ func NewCorsHandler(h http.Handler) *CorsHandler {
 }
 
 func (h *CorsHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
-	writer.Header().Set("Access-Control-Allow-Origin", "*")
-	writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+	writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE")
+	writer.Header().Set("Access-Control-Allow-Credentials", "true")
+	writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization, Accept")
 	h.handler.ServeHTTP(writer, request)
 }
