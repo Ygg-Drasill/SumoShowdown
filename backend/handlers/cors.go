@@ -13,9 +13,12 @@ func NewCorsHandler(h http.Handler) *CorsHandler {
 	return &CorsHandler{h}
 }
 
-var env = os.Getenv("ENVIRONMENT")
+var env string
 
 func (h *CorsHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	if len(env) == 0 {
+		env = os.Getenv("ENVIRONMENT")
+	}
 	var origin string = request.Header.Get("Origin")
 	if env != "dev" {
 		origin = "http://sumoshowdown.games"
@@ -26,6 +29,7 @@ func (h *CorsHandler) ServeHTTP(writer http.ResponseWriter, request *http.Reques
 	writer.Header().Set("Access-Control-Allow-Headers", "Authorization, Origin, Content-Type, Accept, X-Requested-With")
 	if request.Method == "OPTIONS" {
 		writer.WriteHeader(http.StatusOK)
+	} else {
+		h.handler.ServeHTTP(writer, request)
 	}
-	h.handler.ServeHTTP(writer, request)
 }

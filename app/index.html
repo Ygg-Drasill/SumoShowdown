@@ -10,8 +10,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bahianita&family=Bungee&display=swap" rel="stylesheet">
+      <script>
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--viewh', `${vh}px`);
+      window.addEventListener('resize', () => {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--viewh', `${vh}px`);
+      }); 
+    </script>
   </head>
-  <body>
+  <body style="background-color: #F3384B;">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
