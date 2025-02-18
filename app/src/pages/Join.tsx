@@ -4,10 +4,10 @@ import BasePage from "./BasePage";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import useAxiosClient from "@/client";
+import useApiContext from "@/client";
 
 function JoinPage() {
-    const { client } = useAxiosClient()
+    const { client, setPlayerToken } = useApiContext()
     const [code, setCode] = useState("")
     const [name, setName] = useState("")
     const navigate = useNavigate()
@@ -18,10 +18,10 @@ function JoinPage() {
             params: {
                 code: code,
                 name: name
-            }
+            },
         }),
         onSuccess: (res) => {
-            console.log(res.data["token"]);
+            setPlayerToken(res.data["token"])
             navigate("/vote")
         },
         onError: () => {
