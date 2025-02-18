@@ -1,7 +1,27 @@
 import { Box, Container, Typography } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createSession } from "../../../api/sessionAPI";
 import GameButton from "../../components/gameButton";
 
-const CreateGame = () => {
+const CreateGame: React.FC = () => {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const startGame = async () => {
+        if (loading) return;
+        setLoading(true);
+    
+        try {
+            const code = await createSession();
+            console.log("Session Code:", code);
+            navigate("/game"); 
+        } catch (error) {
+            console.error("Failed to fetch session code:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Container
@@ -15,26 +35,36 @@ const CreateGame = () => {
             }}
         >
             <Box>
-                <Typography 
+                <Typography
                     variant="h3"
-                    sx={{ fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" }, fontWeight: 'bold', padding: '2rem' }} 
+                    sx={{
+                        fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" },
+                        fontWeight: "bold",
+                        padding: "2rem",
+                    }}
                 >
                     Welcome to
                 </Typography>
-                <Typography 
+                <Typography
                     variant="h1"
-                    sx={{ fontSize: { xs: "3rem", sm: "4rem", md: "6rem" }, fontWeight: 'bold' }} 
+                    sx={{
+                        fontSize: { xs: "3rem", sm: "4rem", md: "6rem" },
+                        fontWeight: "bold",
+                    }}
                 >
                     SUMO
                 </Typography>
-                <Typography 
+                <Typography
                     variant="h1"
-                    sx={{ fontSize: { xs: "3rem", sm: "4rem", md: "6rem" }, fontWeight: 'bold' }} 
+                    sx={{
+                        fontSize: { xs: "3rem", sm: "4rem", md: "6rem" },
+                        fontWeight: "bold",
+                    }}
                 >
                     SHOWDOWN!
                 </Typography>
             </Box>
-            <GameButton text="Create Game!" onClick={() => {}} />
+            <GameButton text="Create Game!" onClick={startGame} />
         </Container>
     );
 };
