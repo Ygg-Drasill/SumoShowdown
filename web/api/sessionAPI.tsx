@@ -1,6 +1,6 @@
 export const createSession = async (): Promise<string> => {
     try {
-        const response = await fetch("http://localhost:3000/sessions/new", {
+        const response = await fetch("http://192.168.0.134:3000/sessions/new", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
         });

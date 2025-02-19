@@ -6,6 +6,8 @@ import system from './theme'
 import JoinPage from './pages/Join'
 import HomePage from './pages/Home'
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { ApiContextProvider } from './ApiContextProvider'
+import VotePage from './pages/VotePage'
 
 const queryClient = new QueryClient()
 
@@ -14,13 +16,15 @@ function App() {
   return (
     <ChakraProvider value={system}>
       <QueryClientProvider client={queryClient} >
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/join' element={<JoinPage />} />
-            <Route path='/vote' />
-          </Routes>
-        </BrowserRouter>
+        <ApiContextProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<HomePage />} />
+              <Route path='/join' element={<JoinPage />} />
+              <Route path='/vote' element={<VotePage />} />
+            </Routes>
+          </BrowserRouter>
+        </ApiContextProvider>
         <ReactQueryDevtools initialIsOpen={false} position="right" />
       </QueryClientProvider>
     </ChakraProvider>

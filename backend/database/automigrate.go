@@ -40,6 +40,7 @@ func init() {
 			player_id INTEGER NOT NULL,
 			left_wins INTEGER NOT NULL,
 			created_at INTEGER NOT NULL default (unixepoch()),
+			unique (match_id, player_id) on conflict rollback,
 			constraint fk_session foreign key (session_id) references session(id) on delete cascade,
 			constraint fk_match foreign key (match_id) references match(id),
 			constraint fk_player foreign key (player_id) references player(id)
