@@ -3,18 +3,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createSession } from "../../../api/sessionAPI";
 import GameButton from "../../components/gameButton";
+import theme from "../../theme";
 
 const CreateGame: React.FC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
 
-    const startGame = async () => {
+    const createGame = async () => {
         if (loading) return;
         setLoading(true);
 
         try {
             const code = await createSession();
-            console.log("Session Code:", code);
             navigate("/game", { state: { code } }); 
         } catch (error) {
             console.error("Failed to fetch session code:", error);
@@ -41,6 +41,7 @@ const CreateGame: React.FC = () => {
                         fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" },
                         fontWeight: "bold",
                         padding: "2rem",
+                        color: theme.palette.text.secondary,
                     }}
                 >
                     Welcome to
@@ -64,7 +65,9 @@ const CreateGame: React.FC = () => {
                     SHOWDOWN!
                 </Typography>
             </Box>
-            <GameButton text="Create Game!" onClick={startGame} />
+            <Box sx={{padding: "20rem"}}>
+            <GameButton text="Create Game!" onClick={createGame} />
+            </Box>
         </Container>
     );
 };

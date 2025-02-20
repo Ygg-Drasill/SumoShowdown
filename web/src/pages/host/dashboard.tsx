@@ -11,7 +11,6 @@ const Dashboard: React.FC = () => {
                 justifyContent: "space-between",
                 minHeight: "100vh",
                 textAlign: "center",
-                padding: "2rem",
             }}
         >
             <Box sx={{ flexGrow: 1 }}>
@@ -20,7 +19,6 @@ const Dashboard: React.FC = () => {
                     sx={{
                         fontSize: { xs: "2rem", sm: "3rem", md: "5rem" },
                         fontWeight: "bold",
-                        padding: "2rem",
                     }}
                 >
                     Dashboard
