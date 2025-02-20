@@ -11,11 +11,11 @@ const CreateGame: React.FC = () => {
     const startGame = async () => {
         if (loading) return;
         setLoading(true);
-    
+
         try {
             const code = await createSession();
             console.log("Session Code:", code);
-            navigate("/game"); 
+            navigate("/game");
         } catch (error) {
             console.error("Failed to fetch session code:", error);
         } finally {
