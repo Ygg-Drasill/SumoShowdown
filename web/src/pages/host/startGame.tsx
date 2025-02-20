@@ -1,9 +1,14 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
+import { useLocation } from "react-router-dom";
 import GameButton from "../../components/gameButton";
 import theme from "../../theme";
+
 const players = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Hank"];
 
 const StartGame: React.FC = () => {
+    const location = useLocation();
+    const gameCode = location.state?.code || "Loading Code.."; 
+
     return (
         <Container
             sx={{
@@ -35,7 +40,7 @@ const StartGame: React.FC = () => {
                         padding: "2rem",
                     }}
                 >
-                    {""}
+                    {gameCode}
                 </Typography>
 
                 <Box>

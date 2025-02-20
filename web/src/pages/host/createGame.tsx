@@ -15,7 +15,7 @@ const CreateGame: React.FC = () => {
         try {
             const code = await createSession();
             console.log("Session Code:", code);
-            navigate("/game");
+            navigate("/game", { state: { code } }); 
         } catch (error) {
             console.error("Failed to fetch session code:", error);
         } finally {
