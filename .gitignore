@@ -2,3 +2,5 @@ backend/.idea
 backend/tmp
 backend/data.db
 .env
+
+node_modules
