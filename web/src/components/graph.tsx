@@ -14,6 +14,7 @@ const namesData = [
     { name: "Hannah", value: 84 },
     { name: "Isaac", value: 88 },
     { name: "Jack", value: 81 },
+    
 ];
 
 const generateColors = (count: number) => {
@@ -62,7 +63,7 @@ const Graph: React.FC = () => {
 
     return (
         <Stack spacing={2} alignItems="center">
-            <Box ref={chartRef} sx={{ width: "100%", height: 600 }} />
+            <Box ref={chartRef} sx={{ width: "100%", height: 400 }} />
             <GameButton text="Next Round!" onClick={() => setCurrentRound((prev) => prev + 1)} />
         </Stack>
     );

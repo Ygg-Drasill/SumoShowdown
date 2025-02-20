@@ -24,7 +24,6 @@ const StartGame: React.FC = () => {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "space-between",
-                minHeight: "100vh",
                 textAlign: "center",
             }}
         >
@@ -63,15 +62,12 @@ const StartGame: React.FC = () => {
                         sx={{
                             display: "flex",
                             justifyContent: "center",
-                            marginTop: "1rem",
                         }}
                     >
                         <Box
                             sx={{
-                                width: { xs: "10rem", sm: "15rem", md: "30rem" },
-                                height: { xs: "10rem", sm: "15rem", md: "20rem" },
                                 border: "3px solid black",
-                                padding: "1rem",
+                                padding: "2rem",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -103,9 +99,7 @@ const StartGame: React.FC = () => {
                 </Box>
             </Box>
 
-            <Box sx={{ paddingBottom: "5rem" }}>
-                <GameButton text="Start Game!" onClick={() => {RunGame()}} />
-            </Box>
+            <GameButton text="Start Game!" onClick={() => {RunGame()}} />
         </Container>
     );
 };
