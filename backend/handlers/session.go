@@ -56,8 +56,16 @@ func (ctx *DbContext) JoinSessionHandler() http.HandlerFunc {
 		}
 		result, err := ctx.Db.Exec("INSERT INTO player(session_id, token, name) VALUES (?, ?, ?) RETURNING id",
 			sessionId, token, name)
-		rowsAffected, err := result.RowsAffected()
-		if err != nil || rowsAffected == 0 {
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+		playerId, err := result.LastInsertId()
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+		if playerId == 0 {
 			writeError(w, http.StatusInternalServerError,
 				"Unable to join session, player name may already have been taken")
 			return

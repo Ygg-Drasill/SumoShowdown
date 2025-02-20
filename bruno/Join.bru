@@ -5,17 +5,17 @@ meta {
 }
 
 post {
-  url: {{endpoint}}/sessions/join?code=2479&name=alex
+  url: {{endpoint}}/sessions/join?code=9447&name=alex
   body: none
   auth: none
 }
 
 params:query {
-  code: 2479
+  code: 9447
   name: alex
 }
 
 script:post-response {
   if (res.status >= 200 && res.status <= 300)
-  bru.setEnvVar("playerToken",res.body)
+  bru.setEnvVar("playerToken",res.body.token)
 }
