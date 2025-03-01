@@ -1,0 +1,15 @@
+meta {
+  name: session info
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{endpoint}}/sessions/:id/info
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 1
+}

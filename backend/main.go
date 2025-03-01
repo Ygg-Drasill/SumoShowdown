@@ -32,6 +32,7 @@ func main() {
 	server.Handle("PUT 	/sessions/{id}/vote", dbContext.TokenMiddleware(dbContext.VoteHandler()))
 	server.Handle("PATCH /sessions/{id}/votes/close", dbContext.CloseVotingHandler())
 	server.Handle("GET /sessions/{id}/match/results", dbContext.MatchResultHandler())
+	server.Handle("GET /sessions/{id}/info", dbContext.SessionInfoHandler())
 
 	addr := fmt.Sprintf("%s:%s", os.Getenv("API_ADDRESS"), os.Getenv("API_PORT"))
 	log.Println("starting server on", addr)

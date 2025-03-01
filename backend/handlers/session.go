@@ -80,3 +80,42 @@ func (ctx *DbContext) JoinSessionHandler() http.HandlerFunc {
 		w.Write(response)
 	}
 }
+
+type playerInfo struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
+}
+
+type sessionInfo struct {
+	Players []playerInfo `json:"players"`
+}
+
+func (ctx *DbContext) SessionInfoHandler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		response := sessionInfo{Players: make([]playerInfo, 0)}
+		id := r.PathValue("id")
+		rows, err := ctx.Db.Query("SELECT id, name FROM player WHERE session_id = ?", id)
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+		for rows.Next() {
+			var playerId int
+			var playerName string
+			err := rows.Scan(&playerId, &playerName)
+			if err != nil {
+				writeError(w, http.StatusInternalServerError, err.Error())
+				return
+			}
+			response.Players = append(response.Players, playerInfo{Id: playerId, Name: playerName})
+		}
+		b, err := json.Marshal(response)
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, err.Error())
+		}
+		_, err = w.Write(b)
+		if err != nil {
+			writeError(w, http.StatusInternalServerError, err.Error())
+		}
+	}
+}
