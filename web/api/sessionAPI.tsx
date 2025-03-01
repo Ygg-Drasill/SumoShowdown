@@ -22,3 +22,21 @@ export const createSession = async (): Promise<number> => {
         throw error;
     }
 };
+
+export const fetchPlayers = async (sessionId: string): Promise<{ Players: { Id: number; Name: string }[] }> => {
+    try {
+        const response = await fetch(`http://localhost:3000/sessions/${sessionId}/info`);
+        console.log(response)
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch players: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return { Players: data.Players || [] };
+    } catch (error) {
+        console.error("Error fetching players:", error);
+        return { Players: [] };
+    }
+};
+

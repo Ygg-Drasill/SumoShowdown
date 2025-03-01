@@ -1,21 +1,31 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { fetchPlayers } from "../../../api/sessionAPI";
 import GameButton from "../../components/gameButton";
 import theme from "../../theme";
-
-const players = ["Alice", "Bob", "Christoffer", "David", "Eve", "Frank", "Grace", "Hank"];
-
-
-
 
 const StartGame: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const gameCode = location.state?.code || "Loading Code.."; 
+    const [players, setPlayers] = useState<{ Id: number; Name: string }[]>([]);
+
+    useEffect(() => {
+        if (gameCode !== "Loading Code..") {
+            fetchPlayers(gameCode)
+                .then((data) => {
+                    console.log("Fetched Players:", data);
+                    setPlayers(data.Players || []);
+                })
+                .catch((error) => console.error("Failed to fetch players:", error));
+        }
+    }, [gameCode]);
+    
 
     const RunGame = () => {
-        navigate("/dashboard")
-    }
+        navigate("/dashboard");
+    };
 
     return (
         <Container
@@ -47,7 +57,7 @@ const StartGame: React.FC = () => {
                     {gameCode}
                 </Typography>
 
-                <Box sx={{padding: "4rem"}}>
+                <Box sx={{ padding: "4rem" }}>
                     <Typography
                         variant="h3"
                         sx={{
@@ -75,8 +85,8 @@ const StartGame: React.FC = () => {
                             }}
                         >
                             <Grid container spacing={1} justifyContent="center">
-                                {players.map((player, index) => (
-                                    <Grid item xs={4} sm={3} md={3} key={index}>
+                                {players.map((player) => (
+                                    <Grid item xs={4} sm={3} md={3} key={player.Id}>
                                         <Box
                                             sx={{
                                                 padding: "0.5rem 1rem",
@@ -89,7 +99,7 @@ const StartGame: React.FC = () => {
                                                 bgcolor: theme.palette.primary.main
                                             }}
                                         >
-                                            {player}
+                                            {player.Name}
                                         </Box>
                                     </Grid>
                                 ))}
@@ -99,7 +109,7 @@ const StartGame: React.FC = () => {
                 </Box>
             </Box>
 
-            <GameButton text="Start Game!" onClick={() => {RunGame()}} />
+            <GameButton text="Start Game!" onClick={() => { RunGame(); }} />
         </Container>
     );
 };

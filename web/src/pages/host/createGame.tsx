@@ -1,10 +1,10 @@
 import { Box, Container, Typography } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { createSession } from "../../../api/sessionAPI";
 import GameButton from "../../components/gameButton";
 import theme from "../../theme";
 
-<<<<<<< HEAD
-const CreateGame = () => {
-=======
 const CreateGame: React.FC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
@@ -22,7 +22,6 @@ const CreateGame: React.FC = () => {
             setLoading(false);
         }
     };
->>>>>>> feature/issue-1/folder-structure
 
     return (
         <Container
@@ -38,16 +37,12 @@ const CreateGame: React.FC = () => {
             <Box>
                 <Typography 
                     variant="h3"
-<<<<<<< HEAD
-                    sx={{ fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" }, fontWeight: 'bold', padding: '2rem' }} 
-=======
                     sx={{
                         fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" },
                         fontWeight: "bold",
                         padding: "2rem",
                         color: theme.palette.text.secondary,
                     }}
->>>>>>> feature/issue-1/folder-structure
                 >
                     Welcome to
                 </Typography>
@@ -64,13 +59,9 @@ const CreateGame: React.FC = () => {
                     SHOWDOWN!
                 </Typography>
             </Box>
-<<<<<<< HEAD
-            <GameButton text="Create Game!" onClick={() => {}} />
-=======
             <Box sx={{padding: "20rem"}}>
             <GameButton text="Create Game!" onClick={createGame} />
             </Box>
->>>>>>> feature/issue-1/folder-structure
         </Container>
     );
 };
