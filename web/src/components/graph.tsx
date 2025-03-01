@@ -27,12 +27,16 @@ const Graph: React.FC = () => {
 
     useEffect(() => {
         if (!chartRef.current) return;
-        const chartInstance = echarts.init(chartRef.current);
-
+    
+        let chartInstance = echarts.getInstanceByDom(chartRef.current);
+        if (!chartInstance) {
+            chartInstance = echarts.init(chartRef.current);
+        }
+    
         const updateChart = () => {
             const sortedData = [...namesData].sort((a, b) => a.value - b.value);
             const playerColors = generateColors(sortedData.length);
-            
+    
             chartInstance.setOption({
                 title: { text: `Round: ${currentRound}`, left: "center" },
                 grid: { top: 30, bottom: 40, left: 80, right: 20 },
@@ -57,9 +61,14 @@ const Graph: React.FC = () => {
                 ],
             });
         };
-
+    
         updateChart();
+    
+        return () => {
+            chartInstance.dispose();
+        };
     }, [currentRound]);
+    
 
     return (
         <Stack spacing={2} alignItems="center">
