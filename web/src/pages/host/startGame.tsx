@@ -1,9 +1,22 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 import GameButton from "../../components/gameButton";
 import theme from "../../theme";
-const players = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank", "Grace", "Hank"];
+
+const players = ["Alice", "Bob", "Christoffer", "David", "Eve", "Frank", "Grace", "Hank"];
+
+
+
 
 const StartGame: React.FC = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const gameCode = location.state?.code || "Loading Code.."; 
+
+    const RunGame = () => {
+        navigate("/dashboard")
+    }
+
     return (
         <Container
             sx={{
@@ -11,9 +24,7 @@ const StartGame: React.FC = () => {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "space-between",
-                minHeight: "100vh",
                 textAlign: "center",
-                padding: "2rem",
             }}
         >
             <Box sx={{ flexGrow: 1 }}>
@@ -22,7 +33,6 @@ const StartGame: React.FC = () => {
                     sx={{
                         fontSize: { xs: "2rem", sm: "3rem", md: "5rem" },
                         fontWeight: "bold",
-                        padding: "2rem",
                     }}
                 >
                     Join Code:
@@ -32,19 +42,17 @@ const StartGame: React.FC = () => {
                     sx={{
                         fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" },
                         fontWeight: "bold",
-                        padding: "2rem",
                     }}
                 >
-                    {""}
+                    {gameCode}
                 </Typography>
 
-                <Box>
+                <Box sx={{padding: "4rem"}}>
                     <Typography
                         variant="h3"
                         sx={{
                             fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" },
                             fontWeight: "bold",
-                            paddingBottom: "1rem",
                         }}
                     >
                         Joined Players:
@@ -54,15 +62,12 @@ const StartGame: React.FC = () => {
                         sx={{
                             display: "flex",
                             justifyContent: "center",
-                            marginTop: "1rem",
                         }}
                     >
                         <Box
                             sx={{
-                                width: { xs: "10rem", sm: "15rem", md: "30rem" },
-                                height: { xs: "10rem", sm: "15rem", md: "20rem" },
                                 border: "3px solid black",
-                                padding: "1rem",
+                                padding: "2rem",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -71,7 +76,7 @@ const StartGame: React.FC = () => {
                         >
                             <Grid container spacing={1} justifyContent="center">
                                 {players.map((player, index) => (
-                                    <Grid item xs={4} sm={3} md={2} key={index}>
+                                    <Grid item xs={4} sm={3} md={3} key={index}>
                                         <Box
                                             sx={{
                                                 padding: "0.5rem 1rem",
@@ -94,9 +99,7 @@ const StartGame: React.FC = () => {
                 </Box>
             </Box>
 
-            <Box sx={{ paddingBottom: "5rem" }}>
-                <GameButton text="Start Game!" onClick={() => {}} />
-            </Box>
+            <GameButton text="Start Game!" onClick={() => {RunGame()}} />
         </Container>
     );
 };

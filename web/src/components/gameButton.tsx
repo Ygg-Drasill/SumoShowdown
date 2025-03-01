@@ -17,10 +17,9 @@ const GameButton: React.FC<GameButtonProps> = ({ text, onClick }) => {
                     bgcolor: theme.palette.primary.main,
                     borderRadius: "1.5rem",
                     width: { xs: "80vw", sm: "60vw", md: "30rem" },
-                    height: { xs: "4rem", sm: "6rem", md: "15rem" },
+                    height: { xs: "4rem", sm: "6rem", md: "8rem" },
                     fontSize: { xs: "1rem", sm: "1.5rem", md: "2rem" },
                     fontWeight: "bold",
-                    cursor: "pointer",
                     "&:hover": {
                         bgcolor: theme.palette.primary.dark,
                     },

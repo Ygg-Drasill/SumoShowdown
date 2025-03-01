@@ -1,27 +1,28 @@
 import { Box, Container, Typography } from "@mui/material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { createSession } from "../../../api/sessionAPI";
 import GameButton from "../../components/gameButton";
+import theme from "../../theme";
 
+<<<<<<< HEAD
+const CreateGame = () => {
+=======
 const CreateGame: React.FC = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
 
-    const startGame = async () => {
+    const createGame = async () => {
         if (loading) return;
         setLoading(true);
 
         try {
             const code = await createSession();
-            console.log("Session Code:", code);
-            navigate("/game");
+            navigate("/game", { state: { code } }); 
         } catch (error) {
             console.error("Failed to fetch session code:", error);
         } finally {
             setLoading(false);
         }
     };
+>>>>>>> feature/issue-1/folder-structure
 
     return (
         <Container
@@ -35,36 +36,41 @@ const CreateGame: React.FC = () => {
             }}
         >
             <Box>
-                <Typography
+                <Typography 
                     variant="h3"
+<<<<<<< HEAD
+                    sx={{ fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" }, fontWeight: 'bold', padding: '2rem' }} 
+=======
                     sx={{
                         fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" },
                         fontWeight: "bold",
                         padding: "2rem",
+                        color: theme.palette.text.secondary,
                     }}
+>>>>>>> feature/issue-1/folder-structure
                 >
                     Welcome to
                 </Typography>
-                <Typography
+                <Typography 
                     variant="h1"
-                    sx={{
-                        fontSize: { xs: "3rem", sm: "4rem", md: "6rem" },
-                        fontWeight: "bold",
-                    }}
+                    sx={{ fontSize: { xs: "3rem", sm: "4rem", md: "6rem" }, fontWeight: 'bold' }} 
                 >
                     SUMO
                 </Typography>
-                <Typography
+                <Typography 
                     variant="h1"
-                    sx={{
-                        fontSize: { xs: "3rem", sm: "4rem", md: "6rem" },
-                        fontWeight: "bold",
-                    }}
+                    sx={{ fontSize: { xs: "3rem", sm: "4rem", md: "6rem" }, fontWeight: 'bold' }} 
                 >
                     SHOWDOWN!
                 </Typography>
             </Box>
-            <GameButton text="Create Game!" onClick={startGame} />
+<<<<<<< HEAD
+            <GameButton text="Create Game!" onClick={() => {}} />
+=======
+            <Box sx={{padding: "20rem"}}>
+            <GameButton text="Create Game!" onClick={createGame} />
+            </Box>
+>>>>>>> feature/issue-1/folder-structure
         </Container>
     );
 };
