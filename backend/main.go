@@ -14,11 +14,7 @@ import (
 )
 
 func main() {
-<<<<<<< HEAD
-	err := godotenv.Load()
-=======
 	err := godotenv.Load("./.env")
->>>>>>> feature/issue-1/folder-structure
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
