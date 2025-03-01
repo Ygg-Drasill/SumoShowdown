@@ -1,7 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import * as echarts from "echarts";
 import React, { useEffect, useRef, useState } from "react";
-import theme from "../theme";
 import GameButton from "./gameButton";
 
 const namesData = [
@@ -9,13 +8,18 @@ const namesData = [
     { name: "Bob", value: 78 },
     { name: "Charlie", value: 75 },
     { name: "David", value: 85 },
-    { name: "Emma", value: 88 },
-    { name: "Frank", value: 87 },
-    { name: "Grace", value: 99 },
+    { name: "Emma", value: 50 },
+    { name: "Frank", value: 42 },
+    { name: "Grace", value: 69 },
     { name: "Hannah", value: 84 },
     { name: "Isaac", value: 88 },
     { name: "Jack", value: 81 },
+    
 ];
+
+const generateColors = (count: number) => {
+    return Array.from({ length: count }, (_, i) => `hsl(${(i * 360) / count}, 70%, 50%)`);
+};
 
 const Graph: React.FC = () => {
     const chartRef = useRef<HTMLDivElement>(null);
@@ -26,8 +30,8 @@ const Graph: React.FC = () => {
         const chartInstance = echarts.init(chartRef.current);
 
         const updateChart = () => {
-            const sortedData = [...namesData]
-                .sort((a, b) => a.value - b.value);
+            const sortedData = [...namesData].sort((a, b) => a.value - b.value);
+            const playerColors = generateColors(sortedData.length);
             
             chartInstance.setOption({
                 title: { text: `Round: ${currentRound}`, left: "center" },
@@ -44,8 +48,10 @@ const Graph: React.FC = () => {
                 series: [
                     {
                         type: "bar",
-                        data: sortedData.map((d) => d.value),
-                        itemStyle: { color: theme.palette.primary.main },
+                        data: sortedData.map((d, index) => ({
+                            value: d.value,
+                            itemStyle: { color: playerColors[index] }
+                        })),
                         label: { show: true, position: "right" },
                     },
                 ],
@@ -57,8 +63,7 @@ const Graph: React.FC = () => {
 
     return (
         <Stack spacing={2} alignItems="center">
-            <Box ref={chartRef} sx={{ width: "100%", height: 600 }} />
-
+            <Box ref={chartRef} sx={{ width: "100%", height: 400 }} />
             <GameButton text="Next Round!" onClick={() => setCurrentRound((prev) => prev + 1)} />
         </Stack>
     );
